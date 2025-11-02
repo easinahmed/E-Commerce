@@ -24,12 +24,12 @@ const Navbar: React.FC = () => {
       <nav className="mt-10 mb-[23px]">
         <div className="container">
           <div className="nav_container flex items-center justify-between text-button">
-            <h2 className="font-inter font-bold text-2xl">Exclusive</h2>
+            <Link to={"/"} className="font-inter font-bold text-2xl">Exclusive</Link>
 
             <ul className="flex font-poppins items-center gap-12">
-              <li className="relative buttons "><a href="#">Home</a></li>
+              <li className="relative buttons "><Link to={"/"}>Home</Link></li>
               <li className="relative buttons "><Link to={"about"}>About</Link></li>
-              <li className="relative buttons "><a href="#">Contact</a></li>
+              <li className="relative buttons "><Link to={"contact"}>Contact</Link></li>
               <li className="relative buttons "><a href="#">Sign Up</a></li>
             </ul>
 
@@ -44,13 +44,13 @@ const Navbar: React.FC = () => {
                   <img src="wishlist.svg" alt="icon" />
                 </div>
 
-                <div>
+                <Link to={"cart"}>
                   <img src="cart.svg" alt="icon" />
-                </div>
+                </Link>
 
-                <div>
+                <Link to={"account"}>
                   <img src="user.svg" alt="icon" />
-                </div>
+                </Link>
               </div>
             </div>
           </div>
