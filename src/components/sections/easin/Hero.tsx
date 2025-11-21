@@ -1,25 +1,38 @@
-import { ChevronRight } from "lucide-react"
-import { banner } from "../../../constant/constant"
+
+import Slider from "../../Slider/Slider"
+import { useGetCategoriesQuery } from "../../../api/categoriesApi"
+import { useNavigate } from "react-router"
+import { useDispatch } from "react-redux"
+import { selectedCategory } from "../../../features/category/categorySlice"
 
 
-const Hero:React.FC = () => {
+
+const Hero = () => {
+    const {data, isLoading} = useGetCategoriesQuery("")
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    if (isLoading) return 
+
+    const handleFilter = (category:string)=> {
+        dispatch(selectedCategory(category))
+        navigate("/shop")
+    }
+
+    
   return (
     <section className="mb-[165px] ">
         <div className="container">
-            <div className="grid grid-cols-[auto_1fr] gap-11 items-center justify-between">
+            <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-3 lg:gap-11 items-center justify-between">
                 {/* Left side */}
-                <div className="pr-4 border-r-2 pt-10 max-w-[250px]">
-                    <ul className="space-y-4 font-poppins">
-                        <li className="flex items-center justify-between gap-12.5">Woman's Fashion <span> <ChevronRight/> </span></li>
-                        <li className="flex items-center justify-between gap-12.5">Men's Fashion <span> <ChevronRight/> </span></li>
-                        <li>Electronics</li>
-                        <li>Home & Lifestyle</li>
-                        <li>Medicine</li>
-                        <li>Sports & Outdoor</li>
-                        <li>Baby’s & Toys</li>
-                        <li>Groceries</li>
-                        <li>Health & Beauty</li>
+                <div className="hidden lg:block pr-4 border-r-2 pt-10 max-w-[250px]">
+                    <ul className="space-y-4 font-poppins max-h-[344px] overflow-y-scroll">
+                        {data?.map((category)=> <li className="cursor-pointer" onClick={()=> handleFilter(category.slug)} key={category.slug}>{category.name}</li>)}
                     </ul>
+                </div>
+
+                <div className="lg:hidden">
+                    Category
                 </div>
 
                 {/* Right Slider */}
@@ -27,7 +40,8 @@ const Hero:React.FC = () => {
 
                     <div >
                     {/* Here will be slider */}
-                    <img  src={banner} className="w-[892px] h-[344px]" alt="image" />
+                    {/* <img  src={banner} className="w-[892px] h-[344px]" alt="image" /> */}
+                    <Slider/>
                     </div>
                 </div>
 
