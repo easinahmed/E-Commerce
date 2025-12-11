@@ -9,7 +9,7 @@ import { useRef } from "react";
 
 
 const ExploreProducts: React.FC = () => {
-    const { data, isLoading } = useGetProductsQuery('');
+    const { data, isLoading } = useGetProductsQuery();
 
     const sliderRef = useRef<Slider>(null)
 

@@ -13,7 +13,7 @@ import { Bounce, toast } from "react-toastify"
 
 const Wishlist: React.FC = () => {
     const {wishList} = useSelector((state: RootState) => state.wishlist);
-    const {cart} = useSelector((state: RootState) => state.cart);
+    // const {cart} = useSelector((state: RootState) => state.cart);
     // const catergoryList = wishList.map(item => item.category);
     const catergoryList = Array.from(new Set(wishList.map(item => item.category)))
       const { data:firstItems } = useGetProductsQuery({ limit: 2, skip:0, category: catergoryList[0] });
@@ -23,7 +23,7 @@ const Wishlist: React.FC = () => {
 
     const dispatch = useDispatch();
     const handleAddToAllCart = () => {
-        dispatch(moveAllToBag(wishList))
+        dispatch(moveAllToBag(wishList.map(item => ({...item, quantity: 1, subtotal: item.price}))))
         wishList.map(list => dispatch(removeWishlist(list.id)))
 
     }

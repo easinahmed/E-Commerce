@@ -4,11 +4,9 @@ import { useGetProductsQuery } from "../api/productApi"
 import { CommonBreadcrumb } from "../components/CommonBreadcrumb"
 import Loading from "../components/Loading";
 import ProductCard from "../components/ProductCard"
-import { Spinner } from "../components/ui/spinner";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { selectedCategory } from "../features/category/categorySlice";
-import Button1 from "../components/Button1";
 
 const Shop: React.FC = () => {
   const [limit, setLimit] = useState(6)
