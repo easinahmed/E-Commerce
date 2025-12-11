@@ -2,18 +2,31 @@ import { Icon } from "@iconify/react"
 import { useGetProductsQuery } from "../../api/productApi"
 import Button1 from "../../components/Button1"
 import HeadingHomePage from "../../components/HeadingHomePage"
-import Loading from "../../components/Loading"
 import type { Product } from '../../types/index';
 import { Eye } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store/store"
 import { removeWishlist } from "../../features/wishlist/wishlistSlice"
+import { addTocart, moveAllToBag } from "../../features/cart/cartSlice"
+import { Bounce, toast } from "react-toastify"
 
 
 const Wishlist: React.FC = () => {
-    const { data, isLoading } = useGetProductsQuery('');
     const {wishList} = useSelector((state: RootState) => state.wishlist);
+    const {cart} = useSelector((state: RootState) => state.cart);
+    // const catergoryList = wishList.map(item => item.category);
+    const catergoryList = Array.from(new Set(wishList.map(item => item.category)))
+      const { data:firstItems } = useGetProductsQuery({ limit: 2, skip:0, category: catergoryList[0] });
+      const { data:secondItems } = useGetProductsQuery({ limit: 2, skip:0, category: catergoryList[1] });
+      const { data:thirdItems } = useGetProductsQuery({ limit: 2, skip:0, category: catergoryList[2] });
+      const { data:forthItems } = useGetProductsQuery({ limit: 2, skip:0, category: catergoryList[3] });
+
     const dispatch = useDispatch();
+    const handleAddToAllCart = () => {
+        dispatch(moveAllToBag(wishList))
+        wishList.map(list => dispatch(removeWishlist(list.id)))
+
+    }
     return (
         <section>
             <div className="container">
@@ -22,18 +35,14 @@ const Wishlist: React.FC = () => {
                         <h2 className="text-xl font-poppins ">Wishlist 
                            <span className="ml-2">
                             (
-                          {4 
-                            // here will be dynamic value
-                            }
+                          {wishList.length}
                             )
                           </span> 
                         </h2>
-                        <Button1>Move All To Bag</Button1>
+                        <Button1 onClick={handleAddToAllCart} title="Move All To Bag">Move All To Bag</Button1>
                     </div>
                     <div>
                         <div>
-
-                            {isLoading && <Loading />}
 
                         </div>
                         <div className="grid grid-cols-4 gap-x-7.5 gap-y-15">
@@ -57,12 +66,41 @@ const Wishlist: React.FC = () => {
 
                 <div>
 
-                    {isLoading && <Loading />}
-
                 </div>
                 <div className="grid grid-cols-4 gap-x-7.5 gap-y-15">
                     {
-                        wishList?.map((product) => {
+                        catergoryList[0] &&
+                        firstItems?.products.map((product) => {
+                            return (
+                                <ProductWishlist  children={
+                                    <Eye/>
+                                } key={product.id} product={product} deleteItem={false} />
+                            )
+                        })
+                    }
+                    {
+                        catergoryList[1] &&
+                        secondItems?.products.map((product) => {
+                            return (
+                                <ProductWishlist  children={
+                                    <Eye/>
+                                } key={product.id} product={product} deleteItem={false} />
+                            )
+                        })
+                    }
+                    {
+                        catergoryList[2] &&
+                        thirdItems?.products.map((product) => {
+                            return (
+                                <ProductWishlist  children={
+                                    <Eye/>
+                                } key={product.id} product={product} deleteItem={false} />
+                            )
+                        })
+                    }
+                    {
+                        catergoryList[3] &&
+                        forthItems?.products.map((product) => {
                             return (
                                 <ProductWishlist  children={
                                     <Eye/>
@@ -89,7 +127,33 @@ interface ProductCardProps {
     deleteItem?: boolean;
 }
 
+
 const ProductWishlist = ({ product, children, deleteItem=false }: ProductCardProps) => {
+    const {cart} = useSelector((state: RootState) => state.cart);
+    const isExistCart = cart.find(item => item.id === product.id);
+
+        const notify = ()=> toast.success('❤ Successfuly add to wishlist', {
+                  position: "top-center",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  transition: Bounce,
+                  });
+
+    
+       const handleAddToCart = (product:Product) => {
+        
+        if (!isExistCart) {
+            notify()
+            dispatch(addTocart({...product, quantity:1, subtotal:product.price}));
+            dispatch(removeWishlist(product.id))
+        }
+        }
+
     const dispatch = useDispatch();
     return (
         <div className='max-w-[270px] font-poppins'>
@@ -113,7 +177,7 @@ const ProductWishlist = ({ product, children, deleteItem=false }: ProductCardPro
 
                 <img className='h-full' src={product.thumbnail} alt="image" />
 
-                <button className='w-full text-center absolute bg-button p-2 text-white font-poppins transition-all duration-500 cursor-pointer rounded-b-sm opacity-100  bottom-0'>
+                <button onClick={()=> handleAddToCart(product)} className='w-full text-center absolute bg-button p-2 text-white font-poppins transition-all duration-500 cursor-pointer rounded-b-sm opacity-100  bottom-0'>
                     Add To Cart
                 </button>
             </div>

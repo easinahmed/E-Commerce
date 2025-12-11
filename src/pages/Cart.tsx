@@ -7,20 +7,14 @@ import {
     BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 import { Slash, X } from 'lucide-react';
-import { gamepad, monitor } from '../constant/constant';
-import { nanoid } from 'nanoid';
 import Button1 from '../components/Button1';
 import Button2 from '../components/Button2';
 import { Link } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../store/store';
+import { decrementQuantity, incrementQuantity, removecart } from '../features/cart/cartSlice';
 
-// Types
-interface CartItem {
-    id: string;
-    name: string;
-    price: number;
-    quantity: number;
-    image: string;
-}
+
 
 const Cart: React.FC = () => {
     return (
@@ -33,7 +27,7 @@ const Cart: React.FC = () => {
                             <BreadcrumbList>
                                 <BreadcrumbItem className="text-[14px]">
                                     <BreadcrumbLink >
-                                    <Link to={"/"}>Home</Link>
+                                        <Link to={"/"}>Home</Link>
                                     </BreadcrumbLink>
                                 </BreadcrumbItem>
                                 <BreadcrumbSeparator>
@@ -41,7 +35,7 @@ const Cart: React.FC = () => {
                                 </BreadcrumbSeparator>
                                 <BreadcrumbItem>
                                     <BreadcrumbLink>
-                                    <Link to={"/cart"}>Cart</Link>
+                                        <Link to={"/cart"}>Cart</Link>
                                     </BreadcrumbLink>
                                 </BreadcrumbItem>
                             </BreadcrumbList>
@@ -61,9 +55,9 @@ const Cart: React.FC = () => {
 
                     {/* Action Buttons */}
                     <div className="flex items-center justify-between mb-20">
-                        <Button1>
+                        <Link to={"/shop"} className='bg-white cursor-pointer transition-all duration-300 hover:bg-hoverButton2 border-gray-500 border text-black font-medium font-poppins px-12 py-4 rounded-sm'>
                             Return To Shop
-                        </Button1>
+                        </Link>
                         <Button1>
                             Update Cart
                         </Button1>
@@ -94,26 +88,15 @@ const Cart: React.FC = () => {
 
 // Cart Items Component
 const CartItems: React.FC = () => {
-    const cartItems: CartItem[] = [
-        {
-            id: nanoid(),
-            name: "LCD Monitor",
-            price: 650,
-            quantity: 1,
-            image: monitor,
-        },
-        {
-            id: nanoid(),
-            name: "H1 Gamepad",
-            price: 550,
-            quantity: 2,
-            image: gamepad,
-        },
-    ];
+    const { cart } = useSelector((state: RootState) => state.cart);
+    const dispatch = useDispatch();
+
+    console.log(cart);
+    
 
     return (
         <>
-            {cartItems.map((item) => (
+            {cart.map((item) => (
                 <div
                     key={item.id}
                     className="grid shadow-contact py-6 rounded-sm mb-10 px-10 grid-cols-[2fr_1fr_1fr_1fr] gap-4 items-center font-poppins relative group"
@@ -122,35 +105,38 @@ const CartItems: React.FC = () => {
                     <div className="flex items-center gap-5">
                         <div className="relative">
                             <img
-                                src={item.image}
-                                alt={item.name}
+                                src={item.thumbnail}
+                                alt={item.title}
                                 className="w-16 h-16 object-contain"
                             />
                             <button
+                                onClick={() => dispatch(removecart(item.id))}
                                 className="absolute -top-2 -left-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
                                 aria-label="Remove item"
                             >
                                 <X className="w-3 h-3" />
                             </button>
                         </div>
-                        <p className="text-sm md:text-base">{item.name}</p>
+                        <p className="text-sm md:text-base">{item.title}</p>
                     </div>
 
                     {/* Price */}
                     <span className="text-sm md:text-base">${item.price}</span>
 
                     {/* Quantity Controls */}
-                    <div className="flex items-center border border-gray-400 rounded-sm w-fit">
-                      
-                        <span className="px-4 py-2 border-x border-gray-400 min-w-[60px] text-center">
-                            {item.quantity}
+                    <div className="flex items-center border border-gray-400 shadow-2xs rounded-sm w-fit">
+
+                        <button onClick={()=> dispatch(decrementQuantity(item.id))} className='cursor-pointer px-2.5'>-</button>
+                        <span className="flex items-center px-4 py-2 border-x border-gray-400 min-w-10 text-center">
+                            <span>{item.quantity}</span>
                         </span>
-                      
+                        <button onClick={()=> dispatch(incrementQuantity(item.id))} className='cursor-pointer px-2.5'>+</button>
+
                     </div>
 
                     {/* Subtotal */}
                     <span className="text-sm md:text-base font-medium">
-                        ${item.price * item.quantity}
+                        ${item.subtotal.toFixed(2)}
                     </span>
                 </div>
             ))}
@@ -164,25 +150,39 @@ export default Cart;
 
 
 const CartTotalBox: React.FC = () => {
-    const subtotal = 1750;
+    const { cart } = useSelector((state: RootState) => state.cart);
+    const subtotal = cart.reduce((acc, item) => acc + item.subtotal, 0);
     // Example total (650*1 + 550*2 = 1750) 
-    const shipping = 50;
+    const city:string = "Inside Dhaka";
+    const shipping = city === "Outside Dhaka" ? 50 : 100;
     // Example shipping cost 
     const total = subtotal + shipping;
+
+
+
     return (
         <div className='flex justify-end font-poppins mb-20 '>
             <div className='border border-black py-8 px-6 rounded-sm w-full max-w-sm'>
                 <h3 className='text-xl font-medium mb-6'>Cart Total</h3> {/* Subtotal Row */}
                 <div className='flex justify-between py-2 border-b border-gray-300'>
-                    <p>Subtotal:</p> <p>${subtotal}</p>
+                    <p>Subtotal:</p> <p>${subtotal.toFixed(2)}</p>
                 </div> {/* Shipping Row */}
-                <div className='flex justify-between py-2 border-b border-gray-300'>
+                <div className='flex justify-between flex-col gap-2 py-2 border-b border-gray-300'>
                     <p>Shipping:</p>
-                    <p>${shipping}</p>
+                    <div className='flex justify-between flex-col gap-2'>
+                        <ul>
+                            <li>
+                        <input type="radio" name="shipping" id="inside-dhaka " className=' cursor-pointer ' /> Inside Dhaka <span className=' ml-[154px] ' >${shipping}</span>
+                            </li>
+                            <li>
+                        <input type="radio" name="shipping" id="outside-dhaka" className=' cursor-pointer ' /> Outside Dhaka <span className=' ml-35 ' >${shipping}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div> {/* Total Row */}
                 <div className='flex justify-between py-2 mb-6'>
                     <p className='font-medium'>Total:</p>
-                    <p className='font-medium'>${total}</p>
+                    <p className='font-medium'>${total.toFixed(2)}</p>
                 </div> {/* Process to Checkout Button (Red/Primary Color) */}
                 <Button2 className="w-full"> Proceed To Checkout </Button2>
             </div>
