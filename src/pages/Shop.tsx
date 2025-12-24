@@ -4,9 +4,11 @@ import { useGetProductsQuery } from "../api/productApi"
 import { CommonBreadcrumb } from "../components/CommonBreadcrumb"
 import Loading from "../components/Loading";
 import ProductCard from "../components/ProductCard"
+import { Spinner } from "../components/ui/spinner";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { selectedCategory } from "../features/category/categorySlice";
+import Button1 from "../components/Button1";
 
 const Shop: React.FC = () => {
   const [limit, setLimit] = useState(6)
@@ -44,7 +46,7 @@ const handleNextSkip = ()=> {
               <p className=" font-bold text-xl">Shop by Category</p>
               {
                 categoryData?.map((item) => <li onClick={() => dispatch(selectedCategory(item.slug))}
-                  className={`cursor-pointer ${item.slug === value ? "text-button2" : ""}`}
+                  className={`cursor-pointer ${item.slug === value ? "text-button2 font-semibold " : ""}`}
                   key={item.slug}>
                   {item.name}
                 </li>)

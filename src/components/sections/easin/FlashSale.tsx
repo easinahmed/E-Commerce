@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import HeadingHomePage from "../../HeadingHomePage"
 import { useGetProductsQuery } from "../../../api/productApi"
 import ProductCard from "../../ProductCard"
+import { Spinner } from "../../ui/spinner"
 import Button2 from "../../Button2"
 import { useEffect, useState } from "react"
 import Loading from "../../Loading"
@@ -9,7 +10,7 @@ import Slider from "react-slick";
 
 
 const FlashSale: React.FC = () => {
-  const { data, isLoading } = useGetProductsQuery()
+  const { data, isLoading } = useGetProductsQuery('')
 
   if (isLoading) {
     return <p>loading...</p>
@@ -157,7 +158,7 @@ const Countdown: React.FC<{ targetDate: string }> = ({ targetDate }) => {
 
 
 
-function PrevArrow(props:any) {
+function PrevArrow(props) {
   const { onClick } = props;
   return (
     <div onClick={onClick} className="bg-secondary rounded-full flex items-center justify-center w-11.5 h-11.5 absolute -top-[100px] right-[100px] z-50 cursor-pointer transition-all hover:bg-button2 hover:text-white"
@@ -168,7 +169,7 @@ function PrevArrow(props:any) {
   );
 }
 
-function NextArrow(props:any) {
+function NextArrow(props) {
   const { onClick } = props;
   return (
     <div onClick={onClick} className="bg-secondary rounded-full flex items-center justify-center w-11.5 h-11.5 absolute -top-[100px] right-5 z-50 cursor-pointer transition-all hover:bg-button2 hover:text-white">

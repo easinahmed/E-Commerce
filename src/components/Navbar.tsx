@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Heart, Menu, Search, ShoppingCart, X } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { Button } from './ui/button';
 import { Icon } from '@iconify/react';
 import { DropdownMenuItem, DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
+import ProductSearch from './sections/ProductSearch';
 
 export default function NavBar() {
   const navbar = useRef<HTMLElement>(null);
   const themeButton = useRef<HTMLLabelElement>(null);
-  const {wishList} = useSelector((state: RootState) => state.wishlist);
-  const {cart} = useSelector((state: RootState) => state.cart);
+  const { wishList } = useSelector((state: RootState) => state.wishlist);
+  const { cart } = useSelector((state: RootState) => state.cart);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [position, setPosition] = React.useState("bottom")
@@ -60,6 +61,35 @@ export default function NavBar() {
     //   window.removeEventListener('scroll', handleScroll);
     // };
   }, []);
+
+  const user = null
+
+  const allNavLinks = navLinks.map((link) => {
+    if (!user) {
+      return (
+        <NavLink
+          key={link.to}
+          to={link.to}
+          className={({isActive})=> `${isActive? "active":  ""} buttons text-[16px] font-medium leading-6`}
+        >
+          {link.label}
+        </NavLink>
+      );
+    }
+
+    if (link.to !== "/signup" && user) {
+      return (
+        <NavLink
+          key={link.to}
+          to={link.to}
+          className={({isActive})=> `${isActive? "active":  ""} buttons text-[16px] font-medium leading-6`}
+        >
+          {link.label}
+        </NavLink>
+      );
+    }
+
+  });
 
   return (
 
@@ -147,30 +177,21 @@ export default function NavBar() {
             </div>
 
             <div className='lg:flex items-center gap-12 justify-center ' >
-              {navLinks.map((link) => (
-                <a
-                  key={link.to}
-                  href={link.to}
-                  className=" font-poppins buttons relative text-base dark:text-amber-50  dark:hover:text-blue-400 transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {allNavLinks}
             </div>
 
             <div>
-              <div className="flex items-center  gap-6">
-                <div className="flex items-center w-[243px] h-[38px] justify-between py-[7px] px-3 bg-[#F5F5F5] dark:bg-gray-800 rounded-lg">
-                  <input className="font-poppins text-[12px] focus:outline-none w-full" type="text" placeholder="What are you looking for?" />
-                  <button><Search /></button>
+              <div className="flex items-center gap-6">
+                <div className="hidden lg:block translate-y-[-5px] z-80 " >
+                  <ProductSearch />
                 </div>
 
                 <div className="flex items-center gap-4" >
                   <Link to={"/wishlist"} className='p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative'>
                     <Heart size={30} color="#000000" strokeWidth={2} absoluteStrokeWidth className='dark:stroke-white' />
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {wishList.length}
-                      </span>
+                      {wishList.length}
+                    </span>
                   </Link>
 
                   <Link to={"cart"}>
@@ -185,32 +206,32 @@ export default function NavBar() {
                     </button>
                   </Link>
 
-                  
 
-                    <DropdownMenu>
-                      <DropdownMenuTrigger  className='focus:outline-0 w-10 h-10 flex items-center justify-center   rounded-full data-[state=open]:bg-button2 data-[state=open]:text-white cursor-pointer  '><Icon icon="lucide:user" width="30" height="30" /></DropdownMenuTrigger>
-                      <DropdownMenuContent align='end' className='min-w-56 pt-4.5 pl-5 pb-2.5 pr-3 bg-[rgba(0,0,0,0.50)] backdrop-blur-[100px] text-white  border-none space-y-[13px]' >
-                        <DropdownMenuLabel >
-                          <Link className='flex items-center justify-start gap-4' to={"/account"}><Icon icon="lucide:user" width="30" height="30" />Manage My Account</Link>
-                         </DropdownMenuLabel>
-                         
-                        <DropdownMenuItem>
-                          <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="mage:shopping-bag" width="30" height="30" />My Order</Link>
-                          </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="material-symbols-light:cancel-outline" width="30" height="30" />My Cancellation</Link>
-                          </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="stash:star" width="30" height="30" /> My Reviews</Link>
-                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Link className='flex items-center justify-start gap-4' to={"#"}><Icon icon="tabler:logout-2" width="30" height="30" /> Log Out</Link>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
 
-                    
-                  
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className='focus:outline-0 w-10 h-10 flex items-center justify-center   rounded-full data-[state=open]:bg-button2 data-[state=open]:text-white cursor-pointer  '><Icon icon="lucide:user" width="30" height="30" /></DropdownMenuTrigger>
+                    <DropdownMenuContent align='end' className='min-w-56 pt-4.5 pl-5 pb-2.5 pr-3 bg-[rgba(0,0,0,0.50)] backdrop-blur-[100px] text-white  border-none space-y-[13px]' >
+                      <DropdownMenuLabel >
+                        <Link className='flex items-center justify-start gap-4' to={"/account"}><Icon icon="lucide:user" width="30" height="30" />Manage My Account</Link>
+                      </DropdownMenuLabel>
+
+                      <DropdownMenuItem>
+                        <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="mage:shopping-bag" width="30" height="30" />My Order</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="material-symbols-light:cancel-outline" width="30" height="30" />My Cancellation</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="stash:star" width="30" height="30" /> My Reviews</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link className='flex items-center justify-start gap-4' to={"#"}><Icon icon="tabler:logout-2" width="30" height="30" /> Log Out</Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+
+
                 </div>
               </div>
             </div>
@@ -241,13 +262,13 @@ export default function NavBar() {
               <ul className="space-y-2">
                 {navLinks.map((link) => (
                   <li key={link.to}>
-                    <a
-                      href={link.to}
+                    <NavLink
+                      to={link.to}
                       className="block px-4 py-3 font-semibold text-base dark:bg-slate-600 dark:text-amber-50 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {link.label}
-                    </a>
+                    </NavLink>
                   </li>
                 ))}
                 <div>

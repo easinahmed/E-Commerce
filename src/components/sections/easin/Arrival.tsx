@@ -4,7 +4,7 @@ import { useGetProductsQuery } from "../../../api/productApi"
 
 
 const Arrival: React.FC = () => {
-    const { data, isLoading } = useGetProductsQuery()
+    const { data, isLoading } = useGetProductsQuery("")
 
     if (isLoading) return
 
