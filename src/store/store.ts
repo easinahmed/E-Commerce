@@ -5,24 +5,24 @@ import categoryReducer from "../features/category/categorySlice";
 import WishlistReducer from "../features/wishlist/wishlistSlice";
 import cartReducer from "../features/cart/cartSlice";
 import searchItemReducer from "../features/search-items/searchItemsSlice";
-// import { cartApi } from '../api/cartApi'
+import productReducer from "../features/product/productSlice";
+import userReducer from "../features/user/userSlice";
 
 export const store = configureStore({
 	reducer: {
-		// product: productReducer,
+		user: userReducer,
+		products: productReducer,
 		category: categoryReducer,
 		wishlist: WishlistReducer,
 		cart: cartReducer,
 		searchItem: searchItemReducer,
 		[productsApi.reducerPath]: productsApi.reducer,
 		[categoriesApi.reducerPath]: categoriesApi.reducer,
-		// [cartApi.reducerPath]: cartApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
 			.concat(productsApi.middleware)
 			.concat(categoriesApi.middleware),
-	//  .concat(cartApi.middleware)
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

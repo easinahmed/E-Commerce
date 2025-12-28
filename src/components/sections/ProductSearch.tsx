@@ -12,7 +12,7 @@ export default function ProductSearch() {
 	const [allProduct, setAllProducts] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
-	const [activeTab, setActiveTab] = useState("products");
+	const [activeTab] = useState("products");
 	const [showMobileSearch, setShowMobileSearch] = useState(false);
 	const searchRef = useRef<HTMLDivElement>(null);
 
@@ -24,16 +24,19 @@ export default function ProductSearch() {
 			fetch(`https://dummyjson.com/products?limit=193`)
 				.then((res) => res.json())
 				.then((data) => setAllProducts(data.products));
-			if (searchTerm.length > 0) {
-				const result = allProduct.filter((item: Product) =>
-					item.title.toLowerCase().includes(searchTerm.toLowerCase())
-				);
-				setSearchProductResult(result);
-			}
 		} catch (error) {
 			console.log(error);
 		}
-	}, [searchTerm]);
+	}, []);
+
+	useEffect(() => {
+		if (searchTerm.length > 0) {
+			const result = allProduct.filter((item: Product) =>
+				item.title.toLowerCase().includes(searchTerm.toLowerCase())
+			);
+			setSearchProductResult(result);
+		}
+	}, [searchTerm, allProduct]);
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {

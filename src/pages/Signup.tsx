@@ -1,7 +1,10 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Button1 from "../components/Button1";
 import { google, signup } from "../constant/constant";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { registerUser, loginWithGoogle } from "../firebase/auth";
+import { setUser, setLoading, setError } from "../features/user/userSlice";
 
 interface UserData {
   fullName: string;
@@ -10,6 +13,9 @@ interface UserData {
 }
 
 const Signup: React.FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setLocalError] = useState<string | null>(null);
 
   const [userData, setUserData] = useState<UserData>({
     fullName: "",
@@ -25,12 +31,50 @@ const Signup: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-   
-
-    // signup(userData.email, userData.password);
+    setLocalError(null);
+    dispatch(setLoading(true));
+    try {
+      const user = await registerUser(userData.email, userData.password, userData.fullName);
+      dispatch(setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL
+      }));
+      navigate("/");
+    } catch (err: unknown) {
+      let errorMessage = "Signup failed";
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+      setLocalError(errorMessage);
+      dispatch(setError(errorMessage));
+    }
   };
+
+  const handleGoogleSignup = async () => {
+    setLocalError(null);
+    dispatch(setLoading(true));
+    try {
+      const user = await loginWithGoogle();
+      dispatch(setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL
+      }));
+      navigate("/");
+    } catch (err: unknown) {
+      let errorMessage = "Google signup failed";
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+      setLocalError(errorMessage);
+      dispatch(setError(errorMessage));
+    }
+  }
 
   return (
     <div className="relative">
@@ -48,6 +92,8 @@ const Signup: React.FC = () => {
             </h2>
             <p className="font-poppins mb-12">Enter your details below</p>
 
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+
             <form onSubmit={handleSubmit} className="flex flex-col gap-10 font-poppins text-gray-500">
               <input
                 className="pb-2 border-b border-button focus:outline-none"
@@ -56,6 +102,7 @@ const Signup: React.FC = () => {
                 placeholder="Email or Phone Number"
                 value={userData.email}
                 onChange={handleChange}
+                required
               />
 
               <input
@@ -65,6 +112,7 @@ const Signup: React.FC = () => {
                 placeholder="Name"
                 value={userData.fullName}
                 onChange={handleChange}
+                required
               />
 
               <input
@@ -74,14 +122,15 @@ const Signup: React.FC = () => {
                 placeholder="Password"
                 value={userData.password}
                 onChange={handleChange}
+                required
               />
 
-              <button className= "bg-button2 hover:bg-red-600 transition-all duration-300 cursor-pointer text-white font-medium font-poppins px-12 py-4 rounded-sm w-full ">
+              <button className="bg-button2 hover:bg-red-600 transition-all duration-300 cursor-pointer text-white font-medium font-poppins px-12 py-4 rounded-sm w-full ">
                 Create Account
               </button>
             </form>
 
-            <Button1  className="mb-8 mt-8 flex gap-4 w-full justify-center items-center font-normal">
+            <Button1 onClick={handleGoogleSignup} className="mb-8 mt-8 flex gap-4 w-full justify-center items-center font-normal">
               <img src={google} alt="icon" />
               Sign up with Google
             </Button1>

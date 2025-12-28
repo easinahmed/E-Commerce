@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Home, ShoppingCart } from "lucide-react";
+import { Home} from "lucide-react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import ProductCard from "../components/ProductCard";

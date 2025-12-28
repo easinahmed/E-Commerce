@@ -210,9 +210,9 @@ const About: React.FC = () => {
                             {
                               employee.icons.map((social)=>{
                                 return(
-                                    <a key={social.id} href="#">
+                                    <Link key={social.id} to="#">
                                       <Icon icon={social.icon} width={24} height={24}/>
-                                    </a>
+                                    </Link>
                                 )
                               })
                             }

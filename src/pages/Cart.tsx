@@ -7,7 +7,6 @@ import {
     BreadcrumbSeparator,
 } from "../components/ui/breadcrumb";
 import { Slash, X } from 'lucide-react';
-import Button1 from '../components/Button1';
 import Button2 from '../components/Button2';
 import { Link } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -89,7 +88,7 @@ const CartItems: React.FC = () => {
     const dispatch = useDispatch();
 
     console.log(cart);
-    
+
 
     return (
         <>
@@ -123,11 +122,11 @@ const CartItems: React.FC = () => {
                     {/* Quantity Controls */}
                     <div className="flex items-center border border-gray-400 shadow-2xs rounded-sm w-fit">
 
-                        <button onClick={()=> dispatch(decrementQuantity(item.id))} className='cursor-pointer px-2.5'>-</button>
+                        <button onClick={() => dispatch(decrementQuantity(item.id))} className='cursor-pointer px-2.5'>-</button>
                         <span className="flex items-center px-4 py-2 border-x border-gray-400 min-w-10 text-center">
                             <span>{item.quantity}</span>
                         </span>
-                        <button onClick={()=> dispatch(incrementQuantity(item.id))} className='cursor-pointer px-2.5'>+</button>
+                        <button onClick={() => dispatch(incrementQuantity(item.id))} className='cursor-pointer px-2.5'>+</button>
 
                     </div>
 
@@ -150,7 +149,7 @@ const CartTotalBox: React.FC = () => {
     const { cart } = useSelector((state: RootState) => state.cart);
     const subtotal = cart.reduce((acc, item) => acc + item.subtotal, 0);
     // Example total (650*1 + 550*2 = 1750) 
-    const city:string = "Inside Dhaka";
+    const city: string = "Inside Dhaka";
     const shipping = city === "Outside Dhaka" ? 50 : 100;
     // Example shipping cost 
     const total = subtotal + shipping;
@@ -169,10 +168,10 @@ const CartTotalBox: React.FC = () => {
                     <div className='flex justify-between flex-col gap-2'>
                         <ul>
                             <li>
-                        <input type="radio" name="shipping" id="inside-dhaka " className=' cursor-pointer ' /> Inside Dhaka <span className=' ml-[154px] ' >${shipping}</span>
+                                <input type="radio" name="shipping" id="inside-dhaka " className=' cursor-pointer ' /> Inside Dhaka <span className=' ml-[154px] ' >${shipping}</span>
                             </li>
                             <li>
-                        <input type="radio" name="shipping" id="outside-dhaka" className=' cursor-pointer ' /> Outside Dhaka <span className=' ml-35 ' >${shipping}</span>
+                                <input type="radio" name="shipping" id="outside-dhaka" className=' cursor-pointer ' /> Outside Dhaka <span className=' ml-35 ' >${shipping}</span>
                             </li>
                         </ul>
                     </div>

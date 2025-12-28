@@ -85,6 +85,14 @@ const ProductDetails: React.FC = () => {
 		);
 	}
 
+	if (!data) {
+		return (
+			<div className="flex items-center mx-auto text-gray-400 text-center justify-center gap-4 text-3xl max-w-[300px] mt-20">
+				Product Not Found
+			</div>
+		);
+	}
+
 	const handleImageClick = (index: number) => {
 		setImageIndex(index);
 	};
@@ -195,7 +203,7 @@ const ProductDetails: React.FC = () => {
 							<div className="flex items-center justify-center gap-4">
 								{data?.size &&
 									size.map((i) => (
-										<div className="rounded-sm h-8 w-8 flex items-center border border-black hover:bg-button2 hover:text-white transition-all duration-300 cursor-pointer justify-center">
+										<div key={i.id} className="rounded-sm h-8 w-8 flex items-center border border-black hover:bg-button2 hover:text-white transition-all duration-300 cursor-pointer justify-center">
 											{i.size}
 										</div>
 									))}
@@ -300,7 +308,7 @@ const ProductActions = ({
 		email: "admin@example.com",
 	};
 
-	const handleCartAdd = (product: ProductCart) => {
+	const handleCartAdd = (product: Product) => {
 		if (!user) {
 			alert("Please login to add items to wishlist");
 			navigate("/login");
@@ -320,7 +328,7 @@ const ProductActions = ({
 		setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 	};
 
-	console.log(selectedProduct);
+	// console.log(selectedProduct);
 
 	return (
 		<div className="w-full max-w-sm mx-auto space-y-4">
@@ -360,27 +368,26 @@ const ProductActions = ({
 
 				{/* --------------- */}
 
-				{isExistCart ? 
+				{isExistCart ?
 					<button
-					className={`bg-green-600 hover:bg-green-800 transition-all duration-300 cursor-pointer text-white hover:font-bold font-medium font-poppins px-12 py-4 rounded-sm whitespace-nowrap`}
-					onClick={() => handleCartAdd(data)}> 
-					<h1> Add To Card </h1>
-				</button> 
-					: 
+						className={`bg-green-600 hover:bg-green-800 transition-all duration-300 cursor-pointer text-white hover:font-bold font-medium font-poppins px-12 py-4 rounded-sm whitespace-nowrap`}
+						onClick={() => handleCartAdd(data)}>
+						<h1> Add To Card </h1>
+					</button>
+					:
 					<button
-					className={`bg-button2 hover:bg-red-600 transition-all duration-300 cursor-pointer text-white font-medium font-poppins px-12 py-4 rounded-sm whitespace-nowrap`}
-					onClick={() => handleCartAdd(data)}> 
-					<h1> Buy Now </h1>
-				</button> 
+						className={`bg-button2 hover:bg-red-600 transition-all duration-300 cursor-pointer text-white font-medium font-poppins px-12 py-4 rounded-sm whitespace-nowrap`}
+						onClick={() => handleCartAdd(data)}>
+						<h1> Buy Now </h1>
+					</button>
 				}
 
 				<button
 					onClick={() =>
 						handleAddToWishlist({ ...data, quantity: 1, subtotal: data.price })
 					}
-					className={`${
-						isExist2 ? "bg-red-100" : "bg-white"
-					} p-2 rounded-full shadow hover:bg-gray-100 transition`}
+					className={`${isExist2 ? "bg-red-100" : "bg-white"
+						} p-2 rounded-full shadow hover:bg-gray-100 transition`}
 				>
 					{!isExist2 ? (
 						<Heart className="w-5 h-5 text-gray-600" />

@@ -5,9 +5,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenu
 import { Button } from './ui/button';
 import { Icon } from '@iconify/react';
 import { DropdownMenuItem, DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store/store';
 import ProductSearch from './sections/ProductSearch';
+import { logout } from '../features/user/userSlice';
+import { logoutUser } from '../firebase/auth';
+import { useNavigate } from 'react-router';
 
 export default function NavBar() {
   const navbar = useRef<HTMLElement>(null);
@@ -62,37 +65,63 @@ export default function NavBar() {
     // };
   }, []);
 
-  const user = null
+  /* import { useDispatch } from 'react-redux'; moved to top */
+  /* import { logout } from '../features/user/userSlice'; moved to top */
+  /* import { logoutUser } from '../firebase/auth'; moved to top */
+  /* import { useNavigate } from 'react-router'; moved to top */
+
+  // ... imports need to be handled carefully. I will use a larger block or multiple edits if needed.
+  // Actually, I can just update the component body mostly.
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state: RootState) => state.user);
+
+  const handleLogout = async () => {
+    await logoutUser();
+    dispatch(logout());
+    navigate('/');
+  };
 
   const allNavLinks = navLinks.map((link) => {
     if (!user) {
+      if (link.to === "/signup") {
+        return (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) => `${isActive ? "active" : ""} buttons text-[16px] font-medium leading-6`}
+          >
+            {link.label}
+          </NavLink>
+        )
+      } else if (link.to !== "/signup") {
+        return (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) => `${isActive ? "active" : ""} buttons text-[16px] font-medium leading-6`}
+          >
+            {link.label}
+          </NavLink>
+        );
+      }
+    }
+
+    if (user && link.to !== "/signup") {
       return (
         <NavLink
           key={link.to}
           to={link.to}
-          className={({isActive})=> `${isActive? "active":  ""} buttons text-[16px] font-medium leading-6`}
+          className={({ isActive }) => `${isActive ? "active" : ""} buttons text-[16px] font-medium leading-6`}
         >
           {link.label}
         </NavLink>
       );
     }
-
-    if (link.to !== "/signup" && user) {
-      return (
-        <NavLink
-          key={link.to}
-          to={link.to}
-          className={({isActive})=> `${isActive? "active":  ""} buttons text-[16px] font-medium leading-6`}
-        >
-          {link.label}
-        </NavLink>
-      );
-    }
-
   });
 
   return (
-
     <>
       {/* Top Header Design  */}
       <div className="py-[15px]  bg-black max-w-full text-text relative">
@@ -173,11 +202,11 @@ export default function NavBar() {
           <div className="hidden pt-6 pb-6 lg:flex items-center gap-12 justify-between  ">
 
             <div >
-              <Link to={"/"} className=' text-[24px] font-bold leading-6 font-inter ' > 
-              <div className='w-20 h-20 overflow-hidden'>
-                <img className='w-20 h-20' src="logo.avif" alt="logo" />
-               </div>
-               </Link>
+              <Link to={"/"} className=' text-[24px] font-bold leading-6 font-inter ' >
+                <div className='w-20 h-20 overflow-hidden'>
+                  <img className='w-20 h-20' src="logo.avif" alt="logo" />
+                </div>
+              </Link>
             </div>
 
             <div className='lg:flex items-center gap-12 justify-center ' >
@@ -212,30 +241,29 @@ export default function NavBar() {
 
 
 
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className='focus:outline-0 w-10 h-10 flex items-center justify-center   rounded-full data-[state=open]:bg-button2 data-[state=open]:text-white cursor-pointer  '><Icon icon="lucide:user" width="30" height="30" /></DropdownMenuTrigger>
-                    <DropdownMenuContent align='end' className='min-w-56 pt-4.5 pl-5 pb-2.5 pr-3 bg-[rgba(0,0,0,0.50)] backdrop-blur-[100px] text-white  border-none space-y-[13px]' >
-                      <DropdownMenuLabel >
-                        <Link className='flex items-center justify-start gap-4' to={"/account"}><Icon icon="lucide:user" width="30" height="30" />Manage My Account</Link>
-                      </DropdownMenuLabel>
+                  {user && (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className='focus:outline-0 w-10 h-10 flex items-center justify-center   rounded-full data-[state=open]:bg-button2 data-[state=open]:text-white cursor-pointer  '><Icon icon="lucide:user" width="30" height="30" /></DropdownMenuTrigger>
+                      <DropdownMenuContent align='end' className='min-w-56 pt-4.5 pl-5 pb-2.5 pr-3 bg-[rgba(0,0,0,0.50)] backdrop-blur-[100px] text-white  border-none space-y-[13px]' >
+                        <DropdownMenuLabel >
+                          <Link className='flex items-center justify-start gap-4' to={"/account"}><Icon icon="lucide:user" width="30" height="30" />Manage My Account</Link>
+                        </DropdownMenuLabel>
 
-                      <DropdownMenuItem>
-                        <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="mage:shopping-bag" width="30" height="30" />My Order</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="material-symbols-light:cancel-outline" width="30" height="30" />My Cancellation</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="stash:star" width="30" height="30" /> My Reviews</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link className='flex items-center justify-start gap-4' to={"#"}><Icon icon="tabler:logout-2" width="30" height="30" /> Log Out</Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-
-
-
+                        <DropdownMenuItem>
+                          <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="mage:shopping-bag" width="30" height="30" />My Order</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="material-symbols-light:cancel-outline" width="30" height="30" />My Cancellation</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link className='flex items-center justify-start gap-4' to={"/#"}><Icon icon="stash:star" width="30" height="30" /> My Reviews</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <button className='flex items-center justify-start gap-4 w-full' onClick={handleLogout}><Icon icon="tabler:logout-2" width="30" height="30" /> Log Out</button>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
                 </div>
               </div>
             </div>

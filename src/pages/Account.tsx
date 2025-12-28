@@ -10,7 +10,91 @@ import { SlashIcon } from "lucide-react";
 import Button2 from "../components/Button2";
 import { Link } from "react-router";
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../features/user/userSlice';
+import type { RootState } from '../store/store';
+import { useState, useEffect } from "react";
+import { updateUserProfile, updateUserPassword } from "../firebase/auth";
+import { auth } from "../firebase/firebase.config";
+
 const Account: React.FC = () => {
+    const { user } = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch();
+
+    // Profile State
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    // Password State
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    useEffect(() => {
+        if (user?.displayName) {
+            const parts = user.displayName.split(' ');
+            setFirstName(parts[0] || "");
+            setLastName(parts.slice(1).join(' ') || "");
+        }
+    }, [user]);
+
+    const handleProfileUpdate = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            if (auth.currentUser) {
+                const fullName = `${firstName} ${lastName}`.trim();
+                await updateUserProfile(auth.currentUser, { displayName: fullName });
+
+                // Update Redux state
+                dispatch(setUser({
+                    uid: auth.currentUser.uid,
+                    email: auth.currentUser.email,
+                    displayName: fullName,
+                    photoURL: auth.currentUser.photoURL
+                }));
+                alert("Profile updated successfully!");
+            }
+        } catch (error) {
+            console.error("Failed to update profile", error);
+            alert("Failed to update profile.");
+        }
+    };
+
+    const handlePasswordUpdate = async () => {
+        // e.preventDefault(); // This is part of the same form, so handled together or separate?
+        // Let's assume one "Save Changes" button for now or split handling.
+        // The UI has one form.
+
+        if (!newPassword) return; // No password change requested
+
+        if (newPassword !== confirmPassword) {
+            alert("New passwords do not match!");
+            return;
+        }
+
+        try {
+            if (auth.currentUser) {
+                await updateUserPassword(auth.currentUser, newPassword);
+                alert("Password updated successfully!");
+                setNewPassword("");
+                setConfirmPassword("");
+                setCurrentPassword("");
+            }
+        } catch (error) {
+            console.error("Failed to update password", error);
+            alert("Failed to update password. You may need to re-login.");
+        }
+    }
+
+    const handleSaveChanges = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await handleProfileUpdate(e);
+        if (newPassword) {
+            await handlePasswordUpdate();
+        }
+    };
+
+
     return (
         <section className="py-16">
             <div className="container mx-auto px-4">
@@ -20,7 +104,7 @@ const Account: React.FC = () => {
                         <BreadcrumbList>
                             <BreadcrumbItem className="text-[14px]">
                                 <BreadcrumbLink>
-                                <Link to={"/"}>Home</Link>
+                                    <Link to={"/"}>Home</Link>
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator>
@@ -28,14 +112,14 @@ const Account: React.FC = () => {
                             </BreadcrumbSeparator>
                             <BreadcrumbItem>
                                 <BreadcrumbLink >
-                                <Link to={"/account"}>My Account</Link>
+                                    <Link to={"/account"}>My Account</Link>
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
 
                     <span className="text-gray-700">
-                        Welcome! <span className="text-red-500 font-medium">{/* Account Name */}</span>
+                        Welcome! <span className="text-red-500 font-medium">{user?.displayName || "Guest"}</span>
                     </span>
                 </div>
 
@@ -81,7 +165,7 @@ const Account: React.FC = () => {
                             Edit Your Profile
                         </h2>
 
-                        <form className="grid grid-cols-2 gap-6">
+                        <form className="grid grid-cols-2 gap-6" onSubmit={handleSaveChanges}>
                             {/* First Name */}
                             <div>
                                 <label className="block text-sm  mb-2">
@@ -91,6 +175,8 @@ const Account: React.FC = () => {
                                     type="text"
                                     placeholder="First name"
                                     className="w-full bg-gray-100 h-[50px]  px-4 text-gray-600 outline-none"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
                                 />
                             </div>
 
@@ -103,6 +189,8 @@ const Account: React.FC = () => {
                                     type="text"
                                     placeholder="Last name"
                                     className="w-full bg-gray-100 h-[50px]  px-4 text-gray-600 outline-none"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
                                 />
                             </div>
 
@@ -115,6 +203,8 @@ const Account: React.FC = () => {
                                     type="email"
                                     placeholder="Your email"
                                     className="w-full bg-gray-100 h-[50px]  px-4 text-gray-600 outline-none"
+                                    defaultValue={user?.email || ''}
+                                    readOnly
                                 />
                             </div>
 
@@ -141,16 +231,22 @@ const Account: React.FC = () => {
                                         type="password"
                                         placeholder="Current Password"
                                         className="w-full bg-gray-100 h-[50px]  px-4 text-gray-600 outline-none"
+                                        value={currentPassword}
+                                        onChange={(e) => setCurrentPassword(e.target.value)}
                                     />
                                     <input
                                         type="password"
                                         placeholder="New Password"
                                         className="w-full bg-gray-100 h-[50px]  px-4 text-gray-600 outline-none"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
                                     />
                                     <input
                                         type="password"
                                         placeholder="Confirm New Password"
                                         className="w-full bg-gray-100 h-[50px] px-4 text-gray-600 outline-none"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
                                     />
                                 </div>
                             </div>
@@ -160,10 +256,21 @@ const Account: React.FC = () => {
                                 <button
                                     type="button"
                                     className="text-gray-600 hover:text-black font-medium"
+                                    onClick={() => {
+                                        // Reset form
+                                        if (user?.displayName) {
+                                            const parts = user.displayName.split(' ');
+                                            setFirstName(parts[0] || "");
+                                            setLastName(parts.slice(1).join(' ') || "");
+                                        }
+                                        setNewPassword("");
+                                        setConfirmPassword("");
+                                        setCurrentPassword("");
+                                    }}
                                 >
                                     Cancel
                                 </button>
-                                <Button2 className="">Save Change</Button2>
+                                <Button2 type="submit" className="">Save Change</Button2>
                             </div>
                         </form>
                     </div>

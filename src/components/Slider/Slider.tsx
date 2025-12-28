@@ -1,7 +1,9 @@
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+// @ts-expect-error: Swiper css types are missing
 import 'swiper/css';
+// @ts-expect-error: Swiper pagination css types are missing
 import 'swiper/css/pagination';
 import styles from './slider.module.css';
 import { banner } from '../../constant/constant';
@@ -48,21 +50,21 @@ const Slider: React.FC<SliderProps> = ({
       {slides.map((slide) => (
         <SwiperSlide key={slide.id} className={styles.swiperSlide}>
           <div className=' sm:hidden md:block ' >
-            <img 
-            src={slide.image} 
-            className="w-full aspect-[2.59/1] max-w-[892px]" 
-            alt={slide.title}
-            loading="lazy"
-          />
+            <img
+              src={slide.image}
+              className="w-full aspect-[2.59/1] max-w-[892px]"
+              alt={slide.title}
+              loading="lazy"
+            />
           </div>
 
           <div className=' md:hidden ' >
-            <img 
-            src={slide.image} 
-            className="w-[700px] aspect-[2.59/1] " 
-            alt={slide.title}
-            loading="lazy"
-          />
+            <img
+              src={slide.image}
+              className="w-[700px] aspect-[2.59/1] "
+              alt={slide.title}
+              loading="lazy"
+            />
           </div>
         </SwiperSlide>
       ))}

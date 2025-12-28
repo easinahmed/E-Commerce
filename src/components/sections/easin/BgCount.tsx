@@ -6,7 +6,7 @@ import Countdown from '../../CountDown';
 
 
 const BgCount: React.FC = () => {
-    const {data} = useGetProductsQuery("")
+    const {data} = useGetProductsQuery()
   const bgStyle = {
     backgroundImage: `url(${bg_countedown})`,
     backgroundSize: "cover",

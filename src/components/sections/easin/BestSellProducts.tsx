@@ -3,10 +3,9 @@ import Button2 from "../../Button2"
 import HeadingHomePage from "../../HeadingHomePage"
 import Loading from "../../Loading"
 import ProductCard from "../../ProductCard"
-import { Spinner } from "../../ui/spinner"
 
 const BestSellProducts:React.FC = () => {
-    const {data, isLoading} = useGetProductsQuery("")
+    const {data, isLoading} = useGetProductsQuery()
   return (
      <section className="mb-[140px]">
         <div className="container">
