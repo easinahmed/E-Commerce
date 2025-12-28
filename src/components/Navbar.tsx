@@ -130,7 +130,7 @@ export default function NavBar() {
             <div className="absolute lg:hidden left-1/2 transform -translate-x-1/2">
               <a href="/" className="flex items-center">
                 <div className="w-[140px] h-[50px] md:w-[180px] md:h-[70px]  rounded-lg flex items-center justify-center">
-                  <span className="text-black dark:text-amber-50 font-bold font-inter text-xl md:text-2xl">Exclusive</span>
+                  <span className="text-black dark:text-amber-50 font-bold font-inter text-xl md:text-2xl">TheToyBrain</span>
                 </div>
               </a>
             </div>
@@ -173,7 +173,11 @@ export default function NavBar() {
           <div className="hidden pt-6 pb-6 lg:flex items-center gap-12 justify-between  ">
 
             <div >
-              <Link to={"/"} className=' text-[24px] font-bold leading-6 font-inter ' > Exclusive </Link>
+              <Link to={"/"} className=' text-[24px] font-bold leading-6 font-inter ' > 
+              <div className='w-20 h-20 overflow-hidden'>
+                <img className='w-20 h-20' src="logo.avif" alt="logo" />
+               </div>
+               </Link>
             </div>
 
             <div className='lg:flex items-center gap-12 justify-center ' >

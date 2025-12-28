@@ -17,7 +17,9 @@ const Footer: React.FC = () => {
           {/* 1. Exclusive (Subscribe Column) */}
           
           <div>
-            <h3 className="text-2xl font-bold font-inter mb-6">Exclusive</h3>
+            <div className='w-20 h-20 overflow-hidden mb-4 '>
+                <img className='w-20 h-20' src="logo.avif" alt="logo" />
+               </div>
             <h4 className="text-xl font-poppins font-medium mb-4">Subscribe</h4>
             <p className="text-sm mb-4">Get 10% off your first order</p>
             

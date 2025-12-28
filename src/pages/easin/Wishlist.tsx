@@ -13,7 +13,7 @@ import Slider from "react-slick";
 import type { Slider as SliderType } from "react-slick";
 import ProductCard from "../../components/ProductCard";
 import { useRef } from "react";
-import { Link, useNavigate } from "react-router";
+import {  useNavigate } from "react-router";
 import { selectedCategory } from "../../features/category/categorySlice";
 
 const Wishlist: React.FC = () => {
@@ -166,7 +166,7 @@ const ProductWishlist = ({
 	const isExistCart = cart.find((item) => item.id === product.id);
 
 	const notify = () =>
-		toast.success("❤ Successfuly add to wishlist", {
+		toast.success("❤ Successfuly add to cart", {
 			position: "top-center",
 			autoClose: 5000,
 			hideProgressBar: false,

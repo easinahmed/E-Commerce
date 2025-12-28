@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useRef, useState } from "react";
-import Button2 from "../../components/Button2";
 import HeadingHomePage from "../../components/HeadingHomePage";
 import {
 	useGetProductByIdQuery,
@@ -25,14 +24,11 @@ import {
 import { Spinner } from "../../components/ui/spinner";
 import ProductCard from "../../components/ProductCard";
 import Slider from "react-slick";
-import SvgIcon from "../../components/SvgIcon";
 import type { Product, ProductCart } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import {
 	addTocart,
-	decrementQuantity,
-	incrementQuantity,
 	removecart,
 } from "../../features/cart/cartSlice";
 import {
