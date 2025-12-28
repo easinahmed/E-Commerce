@@ -16,13 +16,13 @@ const Arrival: React.FC = () => {
         <section>
             <HeadingHomePage subHeading="Featured" heading="New Arrival" />
             {/* Main Grid */}
-            <div className="grid grid-cols-2  gap-7.5 h-[600px] items-center justify-between">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-7.5 h-auto lg:h-[600px] items-center justify-between">
 
 
                 {/* Left Column */}
-                <div className="bg-black dark:bg-slate-400 relative flex items-end rounded-sm overflow-hidden justify-end  h-[600px]">
+                <div className="bg-black dark:bg-slate-400 relative flex items-end rounded-sm overflow-hidden justify-end h-[400px] lg:h-[600px]">
                     <div className="h-full w-full">
-                        <img src={newArival[0].thumbnail} alt="image" className="rounded-sm h-full w-full" />
+                        <img src={newArival[0].thumbnail} alt="image" className="rounded-sm h-full w-full object-cover" />
                     </div>
 
                     <div className="absolute text-white max-w-[242px] space-y-4 font-poppins left-8 bottom-8">
@@ -34,11 +34,11 @@ const Arrival: React.FC = () => {
 
 
                 {/* Right Grid */}
-                <div className="grid grid-cols-12 gap-8 items-center">
+                <div className="grid grid-cols-12 gap-8 items-center h-full">
 
                     {/* Right Top */}
                     <div className="h-[284px] relative flex rounded-sm overflow-hidden dark:bg-slate-400 items-end justify-end bg-black col-span-12">
-                        <img src={newArival[1].thumbnail} alt="image" className="h-full w-full" />
+                        <img src={newArival[1].thumbnail} alt="image" className="h-full w-full object-cover" />
                         <div className="absolute text-white max-w-[255px] space-y-4 font-poppins left-6 bottom-6">
                             <h2 className="text-[24px] font-inter font-semibold">{newArival[1].title}</h2>
                             <p className="text-sm">{newArival[1].description}</p>
@@ -47,7 +47,7 @@ const Arrival: React.FC = () => {
                     </div>
 
                     {/* Right Bottom left */}
-                    <div className="h-[284px] relative flex rounded-sm overflow-hidden dark:bg-slate-400 items-center justify-center bg-black col-span-6">
+                    <div className="h-[284px] relative flex rounded-sm overflow-hidden dark:bg-slate-400 items-center justify-center bg-black col-span-12 sm:col-span-6">
                         <img src={newArival[2]?.thumbnail} alt="image" />
                         <div className="absolute text-white max-w-[190px] space-y-2 font-poppins left-6 bottom-6">
                             <h2 className="text-[24px] font-inter tracking-[2px] leading-6  font-semibold">{newArival[2].title}</h2>
@@ -57,7 +57,7 @@ const Arrival: React.FC = () => {
                     </div>
 
                     {/* Right Bottom right */}
-                    <div className="h-[284px] relative flex rounded-sm overflow-hidden dark:bg-slate-400 items-center justify-center bg-black col-span-6">
+                    <div className="h-[284px] relative flex rounded-sm overflow-hidden dark:bg-slate-400 items-center justify-center bg-black col-span-12 sm:col-span-6">
                         <img src={newArival[3].thumbnail} alt="image" />
                         <div className="absolute text-white max-w-[190px] space-y-2 font-poppins left-6 bottom-6">
                             <h2 className="text-[24px] font-inter tracking-[2px] leading-6 font-semibold">{newArival[3].title}</h2>

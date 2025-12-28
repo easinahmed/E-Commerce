@@ -77,74 +77,70 @@ const Signup: React.FC = () => {
   }
 
   return (
-    <div className="relative">
-      <div className="absolute">
-        <img src={signup} alt="image" />
+    <div className="flex flex-col lg:flex-row items-center lg:gap-20 xl:gap-[130px] mb-20 mt-10 lg:mt-0">
+      <div className="w-full lg:w-1/2">
+        <img src={signup} alt="image" className="w-full h-auto object-cover" />
       </div>
 
-      <div className="container mt-15">
-        <div className="grid grid-cols-2 items-center gap-[120px]">
-          <div></div>
+      <div className="w-full lg:w-auto px-4 lg:px-0 py-10 lg:py-0">
+        <div className="max-w-full lg:max-w-[370px]">
+          <h2 className="font-inter text-[36px] font-medium mb-6">
+            Create an account
+          </h2>
+          <p className="font-poppins mb-12">Enter your details below</p>
 
-          <div className="py-[125px] max-w-[370px]">
-            <h2 className="font-inter text-[36px] font-medium mb-6">
-              Create an account
-            </h2>
-            <p className="font-poppins mb-12">Enter your details below</p>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
 
-            {error && <p className="text-red-500 mb-4">{error}</p>}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-10 font-poppins text-gray-500">
+            <input
+              className="pb-2 border-b border-button focus:outline-none w-full"
+              name="email"
+              type="email"
+              placeholder="Email or Phone Number"
+              value={userData.email}
+              onChange={handleChange}
+              required
+            />
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-10 font-poppins text-gray-500">
-              <input
-                className="pb-2 border-b border-button focus:outline-none"
-                name="email"
-                type="email"
-                placeholder="Email or Phone Number"
-                value={userData.email}
-                onChange={handleChange}
-                required
-              />
+            <input
+              className="pb-2 border-b border-button focus:outline-none w-full"
+              name="fullName"
+              type="text"
+              placeholder="Name"
+              value={userData.fullName}
+              onChange={handleChange}
+              required
+            />
 
-              <input
-                className="pb-2 border-b border-button focus:outline-none"
-                name="fullName"
-                type="text"
-                placeholder="Name"
-                value={userData.fullName}
-                onChange={handleChange}
-                required
-              />
+            <input
+              className="pb-2 border-b border-button mb-8 focus:outline-none w-full"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={userData.password}
+              onChange={handleChange}
+              required
+            />
 
-              <input
-                className="pb-2 border-b border-button mb-8 focus:outline-none"
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={userData.password}
-                onChange={handleChange}
-                required
-              />
+            <button className="bg-button2 hover:bg-red-600 transition-all duration-300 cursor-pointer text-white font-medium font-poppins px-12 py-4 rounded-sm w-full ">
+              Create Account
+            </button>
+          </form>
 
-              <button className="bg-button2 hover:bg-red-600 transition-all duration-300 cursor-pointer text-white font-medium font-poppins px-12 py-4 rounded-sm w-full ">
-                Create Account
-              </button>
-            </form>
+          <Button1 onClick={handleGoogleSignup} className="mb-8 mt-8 flex gap-4 w-full justify-center items-center font-normal">
+            <img src={google} alt="icon" />
+            Sign up with Google
+          </Button1>
 
-            <Button1 onClick={handleGoogleSignup} className="mb-8 mt-8 flex gap-4 w-full justify-center items-center font-normal">
-              <img src={google} alt="icon" />
-              Sign up with Google
-            </Button1>
-
-            <p className="font-poppins text-center">
-              Already have an account?
-              <Link
-                className="font-medium ml-4 underline underline-offset-8"
-                to="/login"
-              >
-                Log In
-              </Link>
-            </p>
-          </div>
+          <p className="font-poppins text-center">
+            Already have an account?
+            <Link
+              className="font-medium ml-4 underline underline-offset-8"
+              to="/login"
+            >
+              Log In
+            </Link>
+          </p>
         </div>
       </div>
     </div>

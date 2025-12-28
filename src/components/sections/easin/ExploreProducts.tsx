@@ -19,19 +19,37 @@ const ExploreProducts: React.FC = () => {
         speed: 500,
         rows: 2,
         slidesPerRow: 2,
-        autoplay: true
+        autoplay: true,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 1,
+                    rows: 2,
+                    slidesPerRow: 2,
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    rows: 4,
+                    slidesPerRow: 1,
+                }
+            }
+        ]
     }
 
-  const handleClickPrev = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickPrev();
-    }
-  };
-  const handleClickNext = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickNext(); 
-    }
-  };
+    const handleClickPrev = () => {
+        if (sliderRef.current) {
+            sliderRef.current.slickPrev();
+        }
+    };
+    const handleClickNext = () => {
+        if (sliderRef.current) {
+            sliderRef.current.slickNext();
+        }
+    };
     return (
         <section className="mb-[168px]">
             <div className="container">
@@ -39,7 +57,7 @@ const ExploreProducts: React.FC = () => {
                     <HeadingHomePage subHeading="Our Products" heading="Explore Our Products" headingAlign="left" />
 
                     {/* Right Buttons */}
-                    <div className="flex items-center gap-2">
+                    <div className="hidden lg:flex items-center gap-2">
                         <div onClick={handleClickPrev} className="bg-secondary rounded-full flex items-center justify-center w-11.5 h-11.5">
                             <ArrowLeft />
 
@@ -59,20 +77,20 @@ const ExploreProducts: React.FC = () => {
 
                 {/* Grid Layout*/}
                 <div className="grid grid-cols-4 gap-x-7.5 gap-y-15">
-                    
+
                 </div>
 
                 <div className="slider-container">
                     <Slider {...settings} ref={sliderRef}>
                         {
-                        data?.products?.map((product) => {
-                            return (
-                               <div key={product.id}>
-                                 <ProductCard  product={product} />
-                               </div>
-                            )
-                        })
-                    }
+                            data?.products?.map((product) => {
+                                return (
+                                    <div key={product.id}>
+                                        <ProductCard product={product} />
+                                    </div>
+                                )
+                            })
+                        }
                     </Slider>
                 </div>
             </div>

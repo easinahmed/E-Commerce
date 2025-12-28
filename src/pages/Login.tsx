@@ -68,19 +68,19 @@ const LoginPages: React.FC = () => {
      }
 
      return (
-          <div className=' flex items-center  ' >
-               <div>
-                    <img className=' h-[750px] mt-[60px] ' src={signup} alt="loginimages" />
+          <div className='flex flex-col lg:flex-row items-center lg:gap-20 xl:gap-[130px] mb-20'>
+               <div className="w-full lg:w-1/2">
+                    <img className='w-full h-auto object-cover' src={signup} alt="loginimages" />
                </div>
 
-               <div className=' ml-[130px] ' >
+               <div className='w-full lg:w-auto px-4 lg:px-0 py-10 lg:py-0' >
                     <div>
                          <h2 className='  leading-[30px] text-[36px] font-semibold tracking-wide font-inter' >Log in to Exclusive</h2>
                          <p className='mt-6 text-[16px] leading-6 ' >Enter your details below</p>
                          {error && <p className="text-red-500 mt-2">{error}</p>}
                     </div>
 
-                    <div className=' mt-12 ' >
+                    <div className=' mt-8 ' >
                          <input
                               type="text"
                               placeholder='Email or Phone Number'
@@ -92,7 +92,7 @@ const LoginPages: React.FC = () => {
                          <div className="validator-hint hidden">Enter valid email address</div>
                     </div>
 
-                    <div className=" pr-4 mt-10 w-[340px]">
+                    <div className="w-full lg:w-[340px] mt-8">
                          <div className="mb-4">
                               <div className="relative">
                                    <button
@@ -120,14 +120,16 @@ const LoginPages: React.FC = () => {
                          </div>
                     </div>
 
-                    <div className=' pt-10 ' >
-                         <Button1 onClick={handleGoogleLogin} className="mb-8 flex gap-4 w-full justify-center items-center font-normal">
+                    <div className='flex flex-col sm:flex-row gap-4 items-center justify-between pt-10' >
+                         <Button2 onClick={handleLogin}>Log In</Button2>
+                         <button className=' loginhover cursor-pointer text-[16px] leading-6 hover:border-b hover:border-button2 text-button2' >Forget Password?</button>
+                    </div>
+
+                    <div className=' pt-4 ' >
+                         <Button1 onClick={handleGoogleLogin} className="flex gap-4 w-full justify-center items-center font-normal">
                               <img src={google} alt="icon" />
                               Sign up with Google
                          </Button1>
-
-                         <Button2 onClick={handleLogin}>Log In</Button2>
-                         <button className=' loginhover ml-15 cursor-pointer text-[16px] leading-6 hover:border-b hover:border-button2 text-button2' >Forget Password?</button>
                     </div>
 
                     <p className="font-poppins pt-8 text-center "> Don't have any account?

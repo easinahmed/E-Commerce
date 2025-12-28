@@ -124,12 +124,12 @@ const Account: React.FC = () => {
                 </div>
 
                 {/* Account Container */}
-                <div className="grid grid-cols-12 gap-8 font-poppins">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 font-poppins">
                     {/* Sidebar */}
-                    <aside className="col-span-3 space-y-6">
+                    <aside className="col-span-1 lg:col-span-3 space-y-6">
                         <div>
                             <h3 className="font-medium mb-4">Manage My Account</h3>
-                            <ul className="space-y-2 pl-8.5">
+                            <ul className="space-y-2 pl-0 lg:pl-8.5">
                                 <li className="hover:text-button2  text-gray-500 font-poppins cursor-pointer">
                                     My Profile
                                 </li>
@@ -144,7 +144,7 @@ const Account: React.FC = () => {
 
                         <div>
                             <h3 className="font-medium mb-3">My Orders</h3>
-                            <ul className="space-y-2 pl-8.5 ">
+                            <ul className="space-y-2 pl-0 lg:pl-8.5 ">
                                 <li className="text-gray-500 hover:text-button2 cursor-pointer">
                                     My Returns
                                 </li>
@@ -160,12 +160,12 @@ const Account: React.FC = () => {
                     </aside>
 
                     {/* Profile Edit Form */}
-                    <div className="col-span-9 font-poppins bg-white shadow-contact rounded-sm py-10 px-20">
+                    <div className="col-span-1 lg:col-span-9 font-poppins bg-white shadow-contact rounded-sm py-10 px-4 md:px-10 lg:px-20">
                         <h2 className="text-xl font-medium text-button2 mb-6">
                             Edit Your Profile
                         </h2>
 
-                        <form className="grid grid-cols-2 gap-6" onSubmit={handleSaveChanges}>
+                        <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSaveChanges}>
                             {/* First Name */}
                             <div>
                                 <label className="block text-sm  mb-2">
@@ -221,7 +221,7 @@ const Account: React.FC = () => {
                             </div>
 
                             {/* Password Section */}
-                            <div className="col-span-2 mt-4">
+                            <div className="col-span-1 md:col-span-2 mt-4">
                                 <h3 className=" text-gray-800 mb-3">
                                     Password Changes
                                 </h3>
@@ -252,7 +252,7 @@ const Account: React.FC = () => {
                             </div>
 
                             {/* Buttons */}
-                            <div className="col-span-2 flex justify-end gap-8 mt-6">
+                            <div className="col-span-1 md:col-span-2 flex justify-end gap-8 mt-6">
                                 <button
                                     type="button"
                                     className="text-gray-600 hover:text-black font-medium"

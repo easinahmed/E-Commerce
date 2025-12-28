@@ -7,10 +7,7 @@
 /* Dark mode */
 @custom-variant dark (&:where(.dark, .dark *));
 
-@utility container {
-  margin-inline: auto;
-  max-width: 1170px;
-}
+
 
 @theme{
   /* Fonts  */
@@ -237,4 +234,51 @@ input:checked ~ .dot {
   to {
     top: 0;
   }
+}
+
+/* ---break--- Responsive Utilities --- */
+
+/* Touch-friendly responsive spacing */
+@media (hover: none) and (pointer: coarse) {
+  button, a, [role="button"] {
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+  }
+}
+
+/* Responsive scroll behavior */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Responsive overflow handling */
+.responsive-overflow {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 641px) {
+  .responsive-overflow {
+    overflow-x: visible;
+  }
+}
+
+/* Safe area adjustments for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0rem, env(safe-area-inset-left));
+    padding-right: max(0rem, env(safe-area-inset-right));
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  max-width: 1170px;
+  
+}
+
+.container{
+  padding-inline: 24px;
 }

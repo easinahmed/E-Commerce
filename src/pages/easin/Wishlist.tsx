@@ -53,6 +53,26 @@ const Wishlist: React.FC = () => {
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		autoplay: true,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 3,
+				}
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+				}
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+				}
+			}
+		]
 	};
 
 	const { data: allProducts } = useGetProductsQuery({
@@ -90,7 +110,7 @@ const Wishlist: React.FC = () => {
 					</div>
 					<div>
 						<div></div>
-						<div className="grid grid-cols-4 gap-x-7.5 gap-y-15">
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-7.5 gap-y-15">
 							{wishList?.map((product) => {
 								return (
 									<ProductWishlist

@@ -32,43 +32,34 @@ const Slider: React.FC<SliderProps> = ({
   spaceBetween = 30
 }) => {
   return (
-    <Swiper
-      spaceBetween={spaceBetween}
-      centeredSlides={true}
-      autoplay={{
-        delay: autoplayDelay,
-        disableOnInteraction: false,
-      }}
-      pagination={{
-        clickable: true,
-        dynamicBullets: true,
-      }}
-      loop={true}
-      modules={[Autoplay, Pagination]}
-      className={styles.mySwiper}
-    >
-      {slides.map((slide) => (
-        <SwiperSlide key={slide.id} className={styles.swiperSlide}>
-          <div className=' sm:hidden md:block ' >
+    <div className="w-full px-2 xs:px-3 sm:px-4 md:px-5 lg:px-6 xl:px-0">
+      <Swiper
+        spaceBetween={spaceBetween}
+        centeredSlides={true}
+        autoplay={{
+          delay: autoplayDelay,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        loop={true}
+        modules={[Autoplay, Pagination]}
+        className={styles.mySwiper}
+      >
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id} className={styles.swiperSlide}>
             <img
               src={slide.image}
-              className="w-full aspect-[2.59/1] max-w-[892px]"
+              className="w-full h-full aspect-square sm:aspect-4/3 md:aspect-[1.5/1] lg:aspect-2/1 xl:aspect-[2.59/1] object-fit rounded-sm"
               alt={slide.title}
               loading="lazy"
             />
-          </div>
-
-          <div className=' md:hidden ' >
-            <img
-              src={slide.image}
-              className="w-[700px] aspect-[2.59/1] "
-              alt={slide.title}
-              loading="lazy"
-            />
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 };
 

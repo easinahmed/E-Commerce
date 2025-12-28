@@ -115,6 +115,26 @@ const ProductDetails: React.FC = () => {
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		autoplay: true,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 3,
+				}
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+				}
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+				}
+			}
+		]
 	};
 
 	const handleCategory = (category: string) => {
@@ -157,28 +177,28 @@ const ProductDetails: React.FC = () => {
 				</Breadcrumb>
 
 				{/* Grid Layout */}
-				<div className="mt-20 grid grid-cols-[1fr_auto] items-center gap-17.5 mb-[140px]">
+				<div className="mt-10 lg:mt-20 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] items-start gap-10 lg:gap-17.5 mb-[80px] lg:mb-[140px]">
 					{/* Left Side images*/}
-					<div className="max-w-[700] gap-7.5 grid grid-cols-[170px_1fr]">
-						<div className="w-[170px] grid gap-y-4 grid-cols-1 ">
+					<div className="w-full flex flex-col-reverse md:grid md:grid-cols-[170px_1fr] gap-4 md:gap-7.5">
+						<div className="flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-visible">
 							{data?.images.map((img, index) => (
 								<div
 									onClick={() => handleImageClick(index)}
 									key={index}
-									className="size-[100px] xl:size-[170px] bg-secondary flex items-center justify-center rounded-sm py-3 px-6"
+									className="min-w-[100px] size-[100px] xl:size-[170px] bg-secondary flex items-center justify-center rounded-sm py-3 px-6 cursor-pointer hover:border border-gray-400"
 								>
-									<img src={img} alt="image" />
+									<img src={img} alt="image" className="object-contain w-full h-full" />
 								</div>
 							))}
 						</div>
 
-						<div className="max-w-[500px] h-[550px] py-[142px] flex items-center justify-center bg-secondary rounded-sm px-[27px]">
-							<img src={data?.images[imageIndex]} alt="image" />
+						<div className="w-full h-[300px] md:h-[550px] flex items-center justify-center bg-secondary rounded-sm px-4 md:px-[27px]">
+							<img src={data?.images[imageIndex]} alt="image" className="object-contain max-h-full" />
 						</div>
 					</div>
 
 					{/* Right Side text */}
-					<div className="max-w-[400px]">
+					<div className="w-full">
 						<div className="space-y-4 border-b ">
 							<h2 className="text-2xl font-semibold font-inter">
 								{data?.title}

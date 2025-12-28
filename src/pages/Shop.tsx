@@ -38,7 +38,7 @@ const Shop: React.FC = () => {
       <div className="container min-h-screen">
         <CommonBreadcrumb className="mt-20 mb-12.5" />
 
-        <div className="grid gap-20 justify-between grid-cols-[auto_1fr]">
+        <div className="grid gap-10 lg:gap-20 justify-between grid-cols-1 lg:grid-cols-[250px_1fr]">
           <div>
             <ul className="font-poppins space-y-4">
               <p className=" font-bold text-xl">Shop by Category</p>
