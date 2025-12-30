@@ -23,7 +23,7 @@ const FlashSale: React.FC = () => {
 
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -71,21 +71,19 @@ const FlashSale: React.FC = () => {
 
 
   return (
-    <section className="mb-10 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-[60px] py-4 sm:py-6">
-      <div className="container px-4 sm:px-6 md:px-8 lg:px-12">
+    <section className="mb-8 sm:mb-10 md:mb-14 lg:mb-16 xl:mb-20 py-4 sm:py-6 md:py-8">
+      <div className="container px-4 sm:px-6 md:px-8 lg:px-12 mx-auto">
         {/* Heading */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8 md:gap-10 mb-8 sm:mb-10 md:mb-12">
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-4 sm:gap-8 md:gap-12 lg:gap-20 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-6 sm:gap-8 md:gap-12 lg:gap-16 w-full sm:w-auto">
 
             <HeadingHomePage subHeading="Today's" heading="Flash Sales" headingAlign="left" />
             <Countdown targetDate="2025-12-31T23:59:59" />
           </div>
 
-          {/* Right Buttons */}
-          <div className="flex items-center gap-2">
-
-          </div>
+         
+         
         </div>
 
         {/* Grid Layout */}
@@ -95,8 +93,8 @@ const FlashSale: React.FC = () => {
 
         </div>
 
-        {/* Grid Layout*/}
-        <div className="relative">
+        {/* Slider Container */}
+        <div className="relative px-0 sm:px-0 md:px-10 lg:px-16">
           <Slider {...settings}>
             {
               flashSale.map((product) => {
@@ -110,7 +108,7 @@ const FlashSale: React.FC = () => {
           </Slider>
         </div>
 
-        <div className="flex items-center mt-10 sm:mt-12 md:mt-16 lg:mt-20 justify-center">
+        <div className="flex items-center mt-10 sm:mt-12 md:mt-14 lg:mt-16 justify-center">
 
           <Button2 to="/shop">View All Products</Button2>
         </div>
@@ -170,15 +168,15 @@ const Countdown: React.FC<{ targetDate: string }> = ({ targetDate }) => {
   ];
 
   return (
-    <section className="flex max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[320px] xl:max-w-[320px] justify-center mx-auto">
-      <div className="flex flex-wrap justify-center items-start gap-3 sm:gap-4 md:gap-6 px-2 sm:px-0">
+    <section className="flex w-full sm:w-auto justify-center sm:justify-start">
+      <div className="flex flex-wrap justify-center sm:justify-start items-start gap-3 sm:gap-4 md:gap-6 px-0 sm:px-0">
         {timeUnits.map((unit, index) => (
           <div
             key={unit.label}
             className="flex flex-col justify-center items-center"
           >
             <span className="text-[10px] xs:text-xs sm:text-sm font-poppins text-gray-700 font-medium">{unit.label}</span>
-            <p className="font-bold font-inter text-xl xs:text-2xl sm:text-3xl md:text-[32px] text-black">
+            <p className="font-bold font-inter text-xl xs:text-2xl sm:text-3xl md:text-4xl text-black">
               {unit.value.toString().padStart(2, "0")}  {index < 3 ? <span className="text-button2">:</span> : ""}
 
             </p>
@@ -191,23 +189,22 @@ const Countdown: React.FC<{ targetDate: string }> = ({ targetDate }) => {
 
 
 
-function PrevArrow(props: React.HTMLAttributes<HTMLDivElement>) {
+function PrevArrow(props:any) {
   const { onClick } = props;
   return (
-    <div onClick={onClick} className="bg-secondary rounded-full hidden lg:flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 absolute -top-14 sm:-top-16 md:-top-20 lg:-top-24 right-16 sm:right-24 md:right-32 lg:right-48 z-50 cursor-pointer transition-all hover:bg-button2 hover:text-white"
+    <div onClick={onClick} className="bg-secondary rounded-full hidden lg:flex items-center justify-center w-11.5 h-11.5 absolute -top-[100px] right-[100px] z-50 cursor-pointer transition-all hover:bg-button2 hover:text-white"
 
     >
-      <ArrowLeft size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
+      <ArrowLeft />
     </div>
   );
 }
 
-function NextArrow(props: React.HTMLAttributes<HTMLDivElement>) {
+function NextArrow(props:any) {
   const { onClick } = props;
   return (
-    <div onClick={onClick} className="hidden bg-secondary rounded-full lg:flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 absolute -top-14 sm:-top-16 md:-top-20 lg:-top-24 right-2 sm:right-4 md:right-6 lg:right-8 z-50 cursor-pointer transition-all hover:bg-button2 hover:text-white">
-      <ArrowRight size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
+    <div onClick={onClick} className="bg-secondary rounded-full hidden lg:flex items-center justify-center w-11.5 h-11.5 absolute -top-[100px] right-5 z-50 cursor-pointer transition-all hover:bg-button2 hover:text-white">
+      <ArrowRight />
     </div>
   );
 }
-

@@ -114,56 +114,68 @@ export default function ProductSearch() {
 						{/* Mobile Tabs */}
 
 						{/* Mobile Results */}
-						<div className="flex-1 overflow-y-auto">
+						<div className="flex-1 overflow-y-auto bg-white w-full">
 							{activeTab === "products" && (
-								<>
+								<div className="w-full">
 									{searchTerm.length > 0 ? (
-										<>
-											{searchTerm.length > 0 &&
-												searchProductResult.map((product: Product) => (
-													<Link
-														to={`/product/details/${product.id}`}
-														key={product.id}
-														className="flex items-center gap-4 px-4 py-3 border-b border-gray-100"
-													>
-														<div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center text-2xl flex-shrink-0">
-															<img
-																src={product.thumbnail}
-																alt={product.thumbnail}
-															/>
-														</div>
-														<div className="flex-1 min-w-0">
-															<h3 className="text-sm text-gray-900 font-normal mb-1 line-clamp-2">
-																{product.title}
-															</h3>
-															<div className="flex items-center gap-2">
-																<span className="text-red-500 font-semibold">
-																	{product.price}৳
-																</span>
-																{product.discountPercentage && (
-																	<span className="text-gray-400 text-sm line-through">
-																		{product.discountPercentage} %
-																	</span>
-																)}
+										<div className="w-full">
+											{searchProductResult.length > 0 ? (
+												<>
+													{searchProductResult.map((product: Product) => (
+														<Link
+															to={`/product/details/${product.id}`}
+															key={product.id}
+															onClick={() => {
+																setShowMobileSearch(false);
+																setSearchTerm("");
+															}}
+															className="flex items-center gap-4 px-4 py-3 border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100"
+														>
+															<div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center text-2xl shrink-0 overflow-hidden">
+																<img
+																	src={product.thumbnail}
+																	alt={product.title}
+																	className="w-full h-full object-cover"
+																/>
 															</div>
-														</div>
-													</Link>
-												))}
-											<div className="px-4 py-3 text-center border-t border-gray-100">
-												<button
-													onClick={handleSearchResult}
-													className="text-red-500 text-sm font-medium"
-												>
-													See all results
-												</button>
-											</div>
-										</>
+															<div className="flex-1 min-w-0">
+																<h3 className="text-sm text-gray-900 font-normal mb-1 line-clamp-2">
+																	{product.title}
+																</h3>
+																<div className="flex items-center gap-2">
+																	<span className="text-red-500 font-semibold">
+																		{product.price}৳
+																	</span>
+																	{product.discountPercentage && (
+																		<span className="text-gray-400 text-sm line-through">
+																			{product.discountPercentage} %
+																		</span>
+																	)}
+																</div>
+															</div>
+														</Link>
+													))}
+													<div className="px-4 py-3 text-center border-t border-gray-100 bg-gray-50">
+														<button
+															onClick={handleSearchResult}
+															className="text-red-500 text-sm font-medium"
+														>
+															See all results
+														</button>
+													</div>
+												</>
+											) : (
+												<div className="px-4 py-8 text-center text-gray-500">
+													No products found
+												</div>
+											)}
+										</div>
 									) : (
 										<div className="px-4 py-8 text-center text-gray-500">
-											No products found
+											Start typing to search products
 										</div>
 									)}
-								</>
+								</div>
 							)}
 
 							{activeTab === "categories" && (
@@ -214,7 +226,7 @@ export default function ProductSearch() {
 																className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
 															>
 																{/* Product Image */}
-																<div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center text-2xl flex-shrink-0">
+																<div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center text-2xl shrink-0">
 																	<img src={product.thumbnail} alt="image" />
 																</div>
 

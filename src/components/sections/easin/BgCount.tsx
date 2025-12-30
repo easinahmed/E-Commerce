@@ -26,7 +26,7 @@ const BgCount: React.FC = () => {
               <h3 className='text-[#00FF66] font-poppins font-semibold text-xs xs:text-sm sm:text-base'>Categories</h3>
               <h2 className='font-inter font-semibold text-2xl xs:text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-8 xs:leading-10 sm:leading-12 md:leading-14 lg:leading-15 max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-[443px] text-white tracking-wide'>{data?.products[9]?.title}</h2>
               <Countdown targetDate="2025-12-31T23:59:59" />
-              <Button2 to={`/product/details/${data?.products[9]?.id}`} className='bg-[#00FF66]! text-slate-300'>Buy Now</Button2>
+              <Button2 to={`/product/details/${data?.products[9]?.id}`} className='bg-[#00FF66]! flex justify-center text-slate-300'>Buy Now</Button2>
             </div>
 
             {/* Right side */}

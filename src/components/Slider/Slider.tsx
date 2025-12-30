@@ -52,7 +52,7 @@ const Slider: React.FC<SliderProps> = ({
           <SwiperSlide key={slide.id} className={styles.swiperSlide}>
             <img
               src={slide.image}
-              className="w-full h-full aspect-square sm:aspect-4/3 md:aspect-[1.5/1] lg:aspect-2/1 xl:aspect-[2.59/1] object-fit rounded-sm"
+              className="w-full h-full aspect-square sm:aspect-4/3 md:aspect-[1.5/1] lg:aspect-2/1 xl:aspect-[2.59/1] object-cover rounded-sm"
               alt={slide.title}
               loading="lazy"
             />

@@ -143,19 +143,19 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+    <div className="min-h-screen bg-linear-to-br from-purple-50 via-pink-50 to-blue-50">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Premium Store
               </h1>
               <p className="text-sm text-gray-600 mt-1">Discover amazing products</p>
             </div>
             <div className="relative">
-              <button className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <button className="flex items-center gap-2 bg-linear-to-r from-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105">
                 <ShoppingCart size={20} />
                 <span className="font-semibold">{cart.length}</span>
               </button>
@@ -187,7 +187,7 @@ const ProductsPage = () => {
               onClick={() => setSelectedCategory(category.id)}
               className={`px-6 py-2.5 rounded-full font-medium transition-all duration-300 ${
                 selectedCategory === category.id
-                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg scale-105'
+                  ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-gray-50 hover:scale-105'
               }`}
             >
@@ -205,7 +205,7 @@ const ProductsPage = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Product Image */}
-              <div className="relative bg-gradient-to-br from-purple-100 to-pink-100 h-64 flex items-center justify-center overflow-hidden">
+              <div className="relative bg-linear-to-br from-purple-100 to-pink-100 h-64 flex items-center justify-center overflow-hidden">
                 <div className="text-8xl group-hover:scale-110 transition-transform duration-300">
                   {product.image}
                 </div>
@@ -241,7 +241,7 @@ const ProductsPage = () => {
                 <p className="text-gray-600 text-sm mb-4">{product.description}</p>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  <span className="text-2xl font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     ${product.price}
                   </span>
                   <button
@@ -249,7 +249,7 @@ const ProductsPage = () => {
                     disabled={!product.inStock}
                     className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all duration-300 ${
                       product.inStock
-                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:scale-105'
+                        ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:scale-105'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
                   >

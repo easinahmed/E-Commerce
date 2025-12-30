@@ -141,7 +141,7 @@ export default function NavBar() {
 
       <nav ref={navbar} className="bg-white container max-w-full dark:bg-black border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
         <div className="container mx-auto px-2 xs:px-3 sm:px-4 md:px-6">
-          <div className="flex items-center justify-between w-full py-1.5 xs:py-2 sm:py-2.5 md:py-3">
+          <div className="flex items-center justify-between w-full py-1.5 xs:py-3 sm:py-3 md:py-3">
             {/* Left: Mobile Menu Button */}
             <div className="flex items-center justify-center lg:hidden">
               <button
@@ -161,8 +161,8 @@ export default function NavBar() {
             <div className="absolute lg:hidden left-1/2  transform -translate-x-20 ">
               <Link to="/" className="flex items-center">
                 <div className="w-20 h-8 xs:w-24 xs:h-9 sm:w-[140px] sm:h-[50px] md:w-[180px] md:h-[70px] rounded-lg flex items-center justify-center">
-                  <div className='overflow-hidden'>
-                    <img src="logo.avif" className='w-10 h-10' alt="" />
+                  <div className='w-12 h-12 overflow-hidden py-2'>
+                    <img src="logo.avif" className='w-full h-full' alt="" />
                   </div>
                 </div>
               </Link>
@@ -204,12 +204,12 @@ export default function NavBar() {
 
           {/* Desktop Navigation */}
 
-          <div className="hidden pt-4 md:pt-4 lg:pt-5 xl:pt-6 pb-4 md:pb-4 lg:pb-5 xl:pb-6 lg:flex items-center gap-4 md:gap-6 lg:gap-8 xl:gap-12 justify-between">
+          <div className="hidden pt-4 md:pt-4 lg:pt-4 xl:pt-4 pb-4 md:pb-4 lg:pb-5 xl:pb-6 lg:flex items-center gap-4 md:gap-6 lg:gap-8 xl:gap-12 justify-between">
 
             <div >
               <Link to={"/"} className=' text-lg md:text-xl lg:text-2xl font-bold leading-6 font-inter' >
                 <div className='w-12 h-12 overflow-hidden'>
-                  <img className='w-full h-full object-contain' src="logo.avif" alt="logo" />
+                  <img className='w-full h-full object-contain' src="/logo.avif" alt="logo" />
                 </div>
               </Link>
             </div>
@@ -276,19 +276,7 @@ export default function NavBar() {
           </div>
         </div>
 
-        {/* Toggle Button
-        <label ref={themeButton} htmlFor="toggleB" className="hidden lg:flex items-center cursor-pointer fixed top-1.5 xs:top-2 sm:top-3 right-2 xs:right-3 sm:right-4 z-50">
-         
-          <div className="relative">
-            
-            <input onChange={handleChange} type="checkbox" id="toggleB" className="sr-only" />
-           
-            <div className="block bg-gray-600 w-10 h-5 xs:w-12 xs:h-6 sm:w-14 sm:h-8 rounded-full" />
-          
-            <div className="dot absolute left-0.5 top-0.5 bg-white w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 rounded-full transition" />
-          </div>
-         
-        </label> */}
+       
 
 
 
