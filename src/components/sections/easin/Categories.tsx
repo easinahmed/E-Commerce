@@ -3,7 +3,7 @@ import HeadingHomePage from "../../HeadingHomePage"
 import { useGetCategoriesQuery } from "../../../api/categoriesApi"
 import SvgIcon from "../../SvgIcon"
 import Slider from "react-slick"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { selectedCategory } from "../../../features/category/categorySlice"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
@@ -17,6 +17,24 @@ interface Categories {
 
 
 const Categories: React.FC = () => {
+    const [width, setWidth] = useState(5)
+    
+      let screenSize = window.innerWidth
+      useEffect(()=>{
+          if (screenSize <= 640) {
+            setWidth(2)
+            
+          }
+          else if( screenSize <=768){
+            setWidth(3)
+          }
+          else if( screenSize <=1024){
+            setWidth(4)
+          }
+          else{
+            setWidth(5)
+          }
+      }, [screenSize])
 
 
     const sliderRef = useRef<Slider>(null);
@@ -43,11 +61,14 @@ const Categories: React.FC = () => {
         }
     };
 
+    
+    
+
     const settings = {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 5,
+        slidesToShow: width,
         slidesToScroll: 1,
         autoplay: true,
         responsive: [

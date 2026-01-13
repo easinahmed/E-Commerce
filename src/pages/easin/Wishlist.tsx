@@ -12,7 +12,7 @@ import { Bounce, toast } from "react-toastify";
 
 import Slider from "react-slick";
 import ProductCard from "../../components/ProductCard";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { selectedCategory } from "../../features/category/categorySlice";
 
@@ -35,6 +35,26 @@ const Wishlist: React.FC = () => {
 		wishList.map((list) => dispatch(removeWishlist(list.id)));
 	};
 
+	const [width, setWidth] = useState(4)
+	
+	  let screenSize = window.innerWidth
+	  useEffect(()=>{
+		  if (screenSize <= 640) {
+			setWidth(1)
+			
+		  }
+		  else if( screenSize <=768){
+			setWidth(2)
+		  }
+		  else if( screenSize <=1024){
+			setWidth(3)
+		  }
+		  else{
+			setWidth(4)
+		  }
+	  }, [screenSize])
+	
+
 	const handleClickPrev = () => {
 		if (sliderRef.current) {
 			sliderRef.current.slickPrev();
@@ -50,7 +70,7 @@ const Wishlist: React.FC = () => {
 		dots: false,
 		infinite: true,
 		speed: 500,
-		slidesToShow: 4,
+		slidesToShow: width,
 		slidesToScroll: 1,
 		autoplay: true,
 		responsive: [

@@ -15,7 +15,7 @@ import {
 	Truck,
 } from "lucide-react";
 import { nanoid } from "nanoid";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HeadingHomePage from "../../components/HeadingHomePage";
 import {
 	useGetProductByIdQuery,
@@ -77,6 +77,26 @@ const ProductDetails: React.FC = () => {
 		},
 	];
 
+	const [width, setWidth] = useState(4)
+	
+	  let screenSize = window.innerWidth
+	  useEffect(()=>{
+		  if (screenSize <= 640) {
+			setWidth(1)
+			
+		  }
+		  else if( screenSize <=768){
+			setWidth(2)
+		  }
+		  else if( screenSize <=1024){
+			setWidth(3)
+		  }
+		  else{
+			setWidth(4)
+		  }
+	  }, [screenSize])
+	
+
 	if (isLoading) {
 		return (
 			<div className="flex items-center mx-auto text-gray-400 text-center justify-center gap-4 text-3xl max-w-[300px]">
@@ -112,7 +132,7 @@ const ProductDetails: React.FC = () => {
 		dots: false,
 		infinite: true,
 		speed: 500,
-		slidesToShow: 4,
+		slidesToShow: width,
 		slidesToScroll: 1,
 		autoplay: true,
 		responsive: [
@@ -177,7 +197,7 @@ const ProductDetails: React.FC = () => {
 				</Breadcrumb>
 
 				{/* Grid Layout */}
-				<div className="mt-10 lg:mt-20 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] items-start gap-10 lg:gap-17.5 mb-[80px] lg:mb-[140px]">
+				<div className="mt-10 lg:mt-20 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] items-start gap-10 lg:gap-17.5 mb-20 lg:mb-[140px]">
 					{/* Left Side images*/}
 					<div className="w-full flex flex-col-reverse md:grid md:grid-cols-[170px_1fr] gap-4 md:gap-7.5">
 						<div className="flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-visible">

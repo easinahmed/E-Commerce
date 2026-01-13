@@ -10,6 +10,24 @@ import Slider from "react-slick";
 
 const FlashSale: React.FC = () => {
   const { data, isLoading } = useGetProductsQuery()
+  const [width, setWidth] = useState(4)
+
+  let screenSize = window.innerWidth
+  useEffect(()=>{
+      if (screenSize <= 640) {
+        setWidth(1)
+        
+      }
+      else if( screenSize <=768){
+        setWidth(2)
+      }
+      else if( screenSize <=1024){
+        setWidth(3)
+      }
+      else{
+        setWidth(4)
+      }
+  }, [screenSize])
 
   if (isLoading) {
     return <p>loading...</p>
@@ -26,7 +44,7 @@ const FlashSale: React.FC = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: width,
     slidesToScroll: 1,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,

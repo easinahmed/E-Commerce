@@ -33,7 +33,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     email: "admin@example.com"
   };
   const navigate = useNavigate();
-  const notify = () => toast.success('❤ Successfuly add to wishlist', {
+  const notify = () => toast.success('❤ Successfuly added to wishlist', {
     position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -56,10 +56,25 @@ export default function ProductCard({ product }: ProductCardProps) {
         dispatch(removecart(product.id));
         dispatch(addToWishList({ ...product, quantity: 1, subtotal: product.price } as ProductCart));
       } else {
+        notify()
         dispatch(addToWishList({ ...product, quantity: 1, subtotal: product.price } as ProductCart));
       }
     }
   }
+
+  const notifyCard = () =>
+      toast.success("❤ Successfuly added to cart", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
   const handleCartAdd = (product: ProductCart) => {
     if (!user) {
       alert("Please login to add items to wishlist");
@@ -67,9 +82,11 @@ export default function ProductCard({ product }: ProductCardProps) {
       return;
     } else {
       if (!isExistCart) {
+        notifyCard()
         dispatch(addTocart({ ...product, quantity: 1, subtotal: product.price }));
         dispatch(removeWishlist(product.id));
       } else {
+        notifyCard()
         dispatch(removecart(product.id));
       }
     }

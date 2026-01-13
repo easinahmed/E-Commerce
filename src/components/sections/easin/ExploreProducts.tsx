@@ -4,20 +4,61 @@ import HeadingHomePage from "../../HeadingHomePage"
 import ProductCard from "../../ProductCard";
 import Loading from "../../Loading";
 import Slider from "react-slick";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 const ExploreProducts: React.FC = () => {
+
     const { data, isLoading } = useGetProductsQuery();
 
     const sliderRef = useRef<Slider>(null)
+    const [sliderConfig, setSliderConfig] = useState({
+    slidesToShow: 2,
+    rows: 2,
+    slidesPerRow: 2,
+})
+
+useEffect(() => {
+    const handleResize = () => {
+        const width = window.innerWidth
+
+        if (width <= 640) {
+            setSliderConfig({
+                slidesToShow: 1,
+                rows: 1,
+                slidesPerRow: 1,
+            })
+        } else if (width <= 768) {
+            setSliderConfig({
+                slidesToShow: 1,
+                rows: 2,
+                slidesPerRow: 1,
+            })
+        } else if (width <= 1024) {
+            setSliderConfig({
+                slidesToShow: 2,
+                rows: 2,
+                slidesPerRow: 1,
+            })
+        } else {
+            setSliderConfig({
+                slidesToShow: 2,
+                rows: 2,
+                slidesPerRow: 2,
+            })
+        }
+    }
+
+    handleResize() // initial run
+    window.addEventListener("resize", handleResize)
+
+    return () => window.removeEventListener("resize", handleResize)
+}, [])
 
     const settings = {
         infinite: true,
         speed: 500,
-        slidesToShow: 2,
-        rows: 2,
-        slidesPerRow: 2,
+       ...sliderConfig,
         autoplay: true,
         responsive: [
             {

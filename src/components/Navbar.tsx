@@ -162,7 +162,7 @@ export default function NavBar() {
               <Link to="/" className="flex items-center">
                 <div className="w-20 h-8 xs:w-24 xs:h-9 sm:w-[140px] sm:h-[50px] md:w-[180px] md:h-[70px] rounded-lg flex items-center justify-center">
                   <div className='w-12 h-12 overflow-hidden py-2'>
-                    <img src="logo.avif" className='w-full h-full' alt="" />
+                    <img src="/logo.avif" className='w-full h-full' alt="" />
                   </div>
                 </div>
               </Link>
